@@ -1,0 +1,157 @@
+{
+  "note": "Preset di regia. Tutti partono dallo stesso clone della voce di Mauro: cambiano solo velocita' (parametro 'speed' di XTTS), altezza e filtri. 'pitch' e' il rapporto di frequenza applicato con rubberband (1.0 = timbro invariato).",
+  "defaults": {
+    "speed": 1.0,
+    "pitch": 1.0,
+    "gain_db": 0.0,
+    "filters": []
+  },
+  "cleanup": {
+    "descrizione": "Ridotta al minimo dopo il giro 9: con voce_mauro4 (SNR 51,8 dB) il denoise spettrale non ha piu' rumore da togliere e lascia solo 'musical noise' metallico, e l'expander non ha code da chiudere. Se si torna a una registrazione rumorosa, rimettere 'afftdn=nr=20:nf=-50' in 'filters' e 'agate=threshold=0.006:ratio=2:attack=8:release=180:knee=4' in 'post_filters'. In coda c'e' un limiter a -1 dB (level=false, altrimenti alimiter rialza da solo il volume): non e' un effetto, e' un paracadute. Alcune clip escono dal modello a fondo scala e la catena di carattere (gain + compressore) le spingeva oltre, aggiungendo clipping che nella grezza non c'era.",
+    "filters": [
+      "highpass=f=70"
+    ],
+    "post_filters": [
+      "alimiter=limit=0.891:level=false"
+    ]
+  },
+  "source_eq": {
+    "descrizione": "Compensazione del microfono, non del personaggio. Sceso da +6 a +3 dB nel giro 9: sommato all'EQ di presenza dei personaggi faceva quasi +9 dB proprio nella banda dove vivono gli artefatti del vocoder di XTTS, ed era una delle cause del suono metallico. Con una registrazione dal timbro equilibrato, svuotare 'filters'.",
+    "filters": []
+  },
+  "pitch_target_hz": 122.0,
+  "pitch_target_nota": "Altezza media della voce di Mauro in voce_mauro4.flac. Dal giro 9 la correzione grossa la fa prepare_voice.sh trasponendo il RIFERIMENTO (REF_PITCH), non l'uscita: cosi' XTTS genera gia' alla giusta altezza e il vocoder non lascia artefatti. Qui resta solo il ritocco fine per clip, con zona morta e limite stretti (vedi assemble.py), perche' e' la trasposizione a valle a rendere metallica la voce. Mettere a 0 per disattivarla del tutto.",
+  "speakers": {
+    "narratore": {
+      "descrizione": "Didascalie gialle, titolo e crediti. Neutro, un filo piu' lento e posato. Presenza contenuta (+2,5 dB) e compressore leggero: deve restare la voce naturale di Mauro, e' il filo conduttore del racconto.",
+      "speed": 0.94,
+      "pitch": 1.0,
+      "gain_db": 0.0,
+      "filters": [
+        "highpass=f=100"
+      ],
+      "exaggeration": 0.7,
+      "cfg_weight": 0.4,
+      "descrizione_chatterbox": "Didascalie, titolo e crediti: impostazione B, scelta all'ascolto."
+    },
+    "paperino": {
+      "descrizione": "Brontolone, scattante, voce leggermente piu' acuta. La chiarezza si ottiene togliendo i bassi che impastano e alzando la banda di presenza (2-4 kHz, dove stanno le consonanti): e' lo stesso meccanismo che rende nitida la voce dalla radio di Hilde. 'speed' e' sceso da 1.08 a 1.02 perche' sopra 1.05 XTTS mangia le consonanti.",
+      "speed": 1.02,
+      "pitch": 1.1,
+      "gain_db": 0.5,
+      "filters": [
+        "highpass=f=110"
+      ],
+      "exaggeration": 0.85,
+      "cfg_weight": 0.35,
+      "descrizione_chatterbox": "Brontolone: piu' enfasi e piu' liberta', resa scattante."
+    },
+    "matt": {
+      "descrizione": "Il ranger anziano: timbro naturale, tono pacato. Stessa cura per l'intelligibilita' di Paperino ma con presenza piu' moderata (+3,5 dB), per non togliergli il carattere posato.",
+      "speed": 0.97,
+      "pitch": 0.93,
+      "gain_db": 0.0,
+      "filters": [
+        "highpass=f=100"
+      ],
+      "exaggeration": 0.55,
+      "cfg_weight": 0.5,
+      "descrizione_chatterbox": "Ranger anziano: meno enfasi e piu' aderenza al riferimento, tono posato."
+    },
+    "hilde": {
+      "descrizione": "La ranger dell'altra stazione: voce piu' acuta e svelta. Il filtro radio NON sta qui: quando la si sente dalla ricetrasmittente e' la battuta a dirlo (\"radio\": true), perche' nella pagina 42 la scena cambia stazione e dalla radio arriva la voce di Paperino.",
+      "speed": 1.02,
+      "pitch": 1.18,
+      "gain_db": 0.0,
+      "filters": [],
+      "exaggeration": 0.7,
+      "cfg_weight": 0.4,
+      "descrizione_chatterbox": "Enfasi standard: il carattere di trasmissione lo da' il canale radio."
+    },
+    "otis": {
+      "descrizione": "Turista anziano e gioviale, il portavoce del gruppo: conta i passi e fa battute ('montagna fa rima con lasagna'). Un filo sopra la voce naturale, enfasi alta perche' e' sempre di buon umore.",
+      "speed": 1.0,
+      "pitch": 1.05,
+      "gain_db": 0.0,
+      "filters": [],
+      "exaggeration": 0.8,
+      "cfg_weight": 0.4
+    },
+    "susy": {
+      "descrizione": "Turista senza fiato: parla solo per chiedere ossigeno, a frasi spezzate. La piu' acuta del cast e la piu' lenta, perche' ansima.",
+      "speed": 0.95,
+      "pitch": 1.26,
+      "gain_db": 0.0,
+      "filters": [],
+      "exaggeration": 0.9,
+      "cfg_weight": 0.3
+    },
+    "bob": {
+      "descrizione": "Turista palestrato e vanaglorioso: solleva 40 chili con una mano sola. La piu' grave del cast, sicura di se', poco espressiva perche' si ascolta parlare.",
+      "speed": 0.98,
+      "pitch": 0.85,
+      "gain_db": 0.0,
+      "filters": [],
+      "exaggeration": 0.75,
+      "cfg_weight": 0.45
+    }
+  },
+  "type_overrides": {
+    "sfx": {
+      "descrizione": "Onomatopee e grugniti: piu' energici e compressi.",
+      "gain_db": 1.5,
+      "filters": [
+        "acompressor=threshold=-20dB:ratio=3:attack=5:release=80"
+      ]
+    },
+    "credits": {
+      "descrizione": "Crediti letti piu' rapidamente e un filo piu' bassi di volume.",
+      "speed": 1.05,
+      "gain_db": -2.0
+    }
+  },
+  "pauses_ms": {
+    "after_title": 900,
+    "after_credits": 1200,
+    "same_panel": 350,
+    "panel_change": 700,
+    "page_end": 1200
+  },
+  "pitch_handled_upstream": true,
+  "pitch_handled_upstream_nota": "Con Chatterbox l'altezza di ogni personaggio si ottiene intonando il RIFERIMENTO prima della generazione (vedi synthesize_chatterbox.py), non trasponendo l'uscita: il phase vocoder applicato a valle lascia artefatti metallici, come si e' visto nei giri 8-9. Quando e' true, assemble.py non applica ne' 'pitch' ne' la correzione su 'pitch_target_hz'.",
+  "channels": {
+    "radio": {
+      "descrizione": "Voce che esce da una ricetrasmittente: passa-banda 300-3000 Hz, compressore e saturazione tanh a 1,5 (ridotta da 2,2 perche' alzava troppo il fondo). Effetto voluto, non correzione: e' l'unico filtro sopravvissuto al giro 12 insieme a quello delle onomatopee.",
+      "gain_db": 1.0,
+      "filters": [
+        "highpass=f=300",
+        "lowpass=f=3000",
+        "acompressor=threshold=-18dB:ratio=4:attack=5:release=50",
+        "aeval=tanh(1.5*val(ch))/1.5:c=same"
+      ]
+    },
+    "sussurro": {
+      "descrizione": "Battuta detta a mezza voce, fra se' e se' o all'orecchio di qualcuno: nel fumetto e' il balloon TRATTEGGIATO (pagina 45, i turisti che sparlano di Paperino). A differenza della radio non e' solo un filtro: un sussurro e' anche meno enfatico e piu' contenuto, quindi il canale abbassa 'exaggeration' e alza 'cfg_weight' gia' in generazione. In post toglie volume e taglia gli estremi, perche' una voce a mezza voce perde corpo sotto e brillantezza sopra.",
+      "gain_db": -7.0,
+      "filters": [
+        "highpass=f=200",
+        "lowpass=f=6500",
+        "acompressor=threshold=-24dB:ratio=2:attack=12:release=200"
+      ],
+      "exaggeration": 0.35,
+      "cfg_weight": 0.6
+    }
+  },
+  "clip_cleanup": {
+    "descrizione": "Pulizia della singola clip generata, prima della catena di carattere. Due guasti tipici di Chatterbox: i vuoti di secondi in mezzo alla frase (oltre 'max_gap_ms' si accorciano a 'keep_gap_ms', tenendo un pezzo di silenzio vero e non una giunta digitale), e la coda spuria, cioe' un frammento forte tagliato di netto a fine file dopo che la battuta e' gia' finita, che all'ascolto e' un colpo secco fra due battute. La coda si toglie solo se e' piu' corta di 'coda_spuria_max_ms', isolata da almeno 'coda_silenzio_min_ms' di silenzio e attaccata alla fine: una parola vera dopo una pausa e' piu' lunga, e non va mangiata.",
+    "attiva": true,
+    "trim_edges_ms": 120,
+    "max_gap_ms": 300,
+    "keep_gap_ms": 120,
+    "coda_spuria_max_ms": 150,
+    "coda_silenzio_min_ms": 250,
+    "dissolvenza_ms": 15,
+    "dissolvenza_max_dbfs": -20.0
+  },
+  "cast_nota": "Altezze allargate una seconda volta (2026-09-16): da 0,90-1,18 a 0,85-1,26, cioe' da un arco di 5 semitoni a uno di 7. Motivo: la variabilita' di Chatterbox fra una battuta e l'altra e' di 2-3 semitoni, e con sette personaggi gli scostamenti precedenti si confondevano (misurato nel giro 16: bob usciva sopra meta' delle battute di Paperino). Attenzione: bob porta il riferimento a x0,757 e susy a x1,121, mentre la risposta del modello e' stata misurata solo fra x0,86 e x1,00 - oltre e' estrapolazione, da verificare all'ascolto che il timbro non si sfaldi."
+}
