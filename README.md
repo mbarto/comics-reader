@@ -59,7 +59,9 @@ Poi: `./poc/setup.sh`, `./poc/render_pages.sh`, `./poc/prepare_voice.sh`, `./poc
 
 ## Licenze e avvertenze
 
-Il codice di questo repository è di Mauro Bartolomeoli. Sulle dipendenze e sui modelli, e su due
-avvertenze che vale la pena leggere prima di usarlo — il **watermark** presente in ogni audio
-generato, e il **copyright** del materiale di partenza — vedi la sezione *Licenze e uso* di
-[`TECNOLOGIE.md`](TECNOLOGIE.md#10-licenze-e-uso).
+Il codice di questo repository è rilasciato sotto licenza **MIT** (vedi [`LICENSE`](LICENSE)).
+
+Le dipendenze e i modelli hanno licenze proprie, e ci sono due avvertenze che vale la pena leggere
+prima di usarlo: il **watermark** neurale presente in ogni audio generato, e il **copyright** del
+materiale di partenza — un fumetto non diventa libero perché il software che lo legge lo è. Entrambe
+nella sezione *Licenze e uso* di [`TECNOLOGIE.md`](TECNOLOGIE.md#10-licenze-e-uso).

@@ -329,6 +329,7 @@ diverse**, e quella dei pesi è l'unica che decide cosa puoi farci.
 
 | componente | licenza | conseguenza |
 |---|---|---|
+| **questo progetto** (codice e documenti) | **MIT**, Mauro Bartolomeoli 2026 | libero, anche commerciale |
 | `chatterbox-tts` (codice) | MIT, Resemble AI 2025 | libero, anche commerciale |
 | **pesi Chatterbox Multilingual** | **MIT** | uso commerciale permesso, nessun obbligo di attribuzione |
 | `resemble-perth` (watermarker) | MIT | — |
