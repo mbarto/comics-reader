@@ -1,0 +1,228 @@
+{
+  "note": "Preset di regia. Tutti partono dallo stesso clone della voce di Mauro: cambiano solo velocita' (parametro 'speed' di XTTS), altezza e filtri. 'pitch' e' il rapporto di frequenza applicato con rubberband (1.0 = timbro invariato).",
+  "defaults": {
+    "speed": 1.0,
+    "pitch": 1.0,
+    "gain_db": 0.0,
+    "filters": []
+  },
+  "cleanup": {
+    "descrizione": "Ridotta al minimo dopo il giro 9: con voce_mauro4 (SNR 51,8 dB) il denoise spettrale non ha piu' rumore da togliere e lascia solo 'musical noise' metallico, e l'expander non ha code da chiudere. Se si torna a una registrazione rumorosa, rimettere 'afftdn=nr=20:nf=-50' in 'filters' e 'agate=threshold=0.006:ratio=2:attack=8:release=180:knee=4' in 'post_filters'. In coda c'e' un limiter a -1 dB (level=false, altrimenti alimiter rialza da solo il volume): non e' un effetto, e' un paracadute. Alcune clip escono dal modello a fondo scala e la catena di carattere (gain + compressore) le spingeva oltre, aggiungendo clipping che nella grezza non c'era.",
+    "filters": [
+      "highpass=f=70"
+    ],
+    "post_filters": [
+      "alimiter=limit=0.891:level=false"
+    ]
+  },
+  "source_eq": {
+    "descrizione": "Compensazione del microfono, non del personaggio. Sceso da +6 a +3 dB nel giro 9: sommato all'EQ di presenza dei personaggi faceva quasi +9 dB proprio nella banda dove vivono gli artefatti del vocoder di XTTS, ed era una delle cause del suono metallico. Con una registrazione dal timbro equilibrato, svuotare 'filters'.",
+    "filters": []
+  },
+  "pitch_target_hz": 122.0,
+  "pitch_target_nota": "Altezza media della voce di Mauro in voce_mauro4.flac. Dal giro 9 la correzione grossa la fa prepare_voice.sh trasponendo il RIFERIMENTO (REF_PITCH), non l'uscita: cosi' XTTS genera gia' alla giusta altezza e il vocoder non lascia artefatti. Qui resta solo il ritocco fine per clip, con zona morta e limite stretti (vedi assemble.py), perche' e' la trasposizione a valle a rendere metallica la voce. Mettere a 0 per disattivarla del tutto.",
+  "speakers": {
+    "narratore": {
+      "speed": 0.94,
+      "pitch": 1.0,
+      "gain_db": 0.0,
+      "filters": [],
+      "exaggeration": 0.6,
+      "cfg_weight": 0.45,
+      "descrizione": "Didascalie, titolo, crediti e le onomatopee che non vengono da nessuno. Neutro, un filo piu' lento e posato."
+    },
+    "paperone": {
+      "speed": 1.0,
+      "pitch": 1.0,
+      "gain_db": 0.0,
+      "filters": [],
+      "exaggeration": 0.6,
+      "cfg_weight": 0.45,
+      "descrizione": "Il protagonista: avarissimo miliardario che compra da Archimede la stampante 3D e la usa per stampare altre stampanti, rovinando il mercato prima dei bastoni, poi delle uova. Comanda tutti, sbraita, conta i soldi, dà ordini a Miss Paperett e aggredisce Archimede quando i prezzi crollano. Si riconosce da: Papero anziano con basettoni e piumaggio bianco, redingote rossa, ghette blu, cilindro nero con fascia azzurra, sempre col bastone da passeggio ricurvo azzurro (che si rompe a pagina 1). Parla esclamando 'Sgrunt!', 'Umpf!', 'Uack!'"
+    },
+    "archimede": {
+      "speed": 1.0,
+      "pitch": 1.0,
+      "gain_db": 0.0,
+      "filters": [],
+      "exaggeration": 0.6,
+      "cfg_weight": 0.45,
+      "descrizione": "L'inventore: cede a Paperone la stampante 3D per cento dollari, poi inventa il 'multigallinplicatore' che duplica le galline e scatena il caos di uova. Ottimista, si scusa sempre, dice che tutto si risolverà da sé; alla fine ferma le macchine nel suo laboratorio. Si riconosce da: Papero magro e alto, camicia giallo brillante con gilet nero e pantaloni marroni, cappello di paglia sformato in testa, occhialini tondi sul becco. In campagna sta fra galline e campanelle metalliche del suo macchinario."
+    },
+    "paperett": {
+      "speed": 1.0,
+      "pitch": 1.0,
+      "gain_db": 0.0,
+      "filters": [],
+      "exaggeration": 0.6,
+      "cfg_weight": 0.45,
+      "descrizione": "La segretaria fedele di Paperone: gli porta i conti, lo avverte ('ho un brutto presentimento'), lo chiama sempre 'principale', lo segue in campagna a comprare galline e infine lo salva a bordo di un canotto gonfiabile sul mare di uova. Si riconosce da: Papera anziana, capelli grigi raccolti a chignon, occhiali, corpetto nero e lunga gonna lilla con scarpe viola; porta quasi sempre una cartellina/tavoletta marrone sotto il braccio. Tono rispettoso e preoccupato."
+    },
+    "commessa": {
+      "speed": 1.0,
+      "pitch": 1.0,
+      "gain_db": 0.0,
+      "filters": [],
+      "exaggeration": 0.6,
+      "cfg_weight": 0.45,
+      "descrizione": "La commessa sfaticata dei negozi di Paperone ('Bastoni de' Paperoni', poi il banco delle uova e quello delle forchette commestibili): sta sempre fuori a bighellonare invece di servire, risponde acida che non ci sono clienti, tira sul prezzo con il capo e alla fine piazza le forchette a cinque dollari. Si riconosce da: Papera giovane con vistosa capigliatura bionda cotonata, completo nero elegante con polsini rosa, scarpe rosso-arancio; gioca con uno yo-yo verde o fa palloncini con la gomma da masticare. Tono annoiato e insolente. Nella storia non viene mai chiamato per nome."
+    },
+    "clienti_stampanti": {
+      "speed": 1.0,
+      "pitch": 1.0,
+      "gain_db": 0.0,
+      "filters": [],
+      "exaggeration": 0.6,
+      "cfg_weight": 0.45,
+      "descrizione": "I paperopolesi entusiasti che fanno la fila e comprano le stampanti 3D a pochi dollari: salutano Paperone al negozio, si vantano dell'affare e non aspettano di provarla a casa. Si riconosce da: Gruppo misto in coda davanti a 'Stampanti 3D de' Paperoni': due papere che portano insieme uno scatolone, una papera dai capelli rossi con la stampante in spalla e un papero col gilet verde che cammina accanto a lei. Nella storia non viene mai chiamato per nome."
+    },
+    "cuoco": {
+      "speed": 1.0,
+      "pitch": 1.0,
+      "gain_db": 0.0,
+      "filters": [],
+      "exaggeration": 0.6,
+      "cfg_weight": 0.45,
+      "descrizione": "Il cuoco del 'Diner de' Paperoni': a ogni ordinazione di Paperone risponde proponendo uova in tutti i modi (frittata, al tegamino, alla coque, strapazzate), perché con il crollo dei prezzi in cucina ha solo uova; è lui a rivelare che la colpa è delle galline 3D di Archimede. Si riconosce da: Omone dal muso canino, ghigno larghissimo e barba ispida, camicia verde con maniche rimboccate, grembiule bianco e berretto rosso da cuoco; sta dietro il bancone del vagone-ristorante con lo strofinaccio. Nella storia non viene mai chiamato per nome."
+    },
+    "acchiappapolli": {
+      "speed": 0.94,
+      "pitch": 1.0,
+      "gain_db": 0.0,
+      "filters": [],
+      "exaggeration": 0.6,
+      "cfg_weight": 0.45,
+      "descrizione": "Gli addetti comunali mandati a catturare le galline: fanno largo con i retini, dicono di portarle fuori città per ordine del sindaco, poi vengono travolti e chiedono aiuto. Si riconosce da: Due-tre uomini in tuta e berretto verde, con grandi retini a manico lungo e un camioncino blu, sepolti fra galline e uova. Nella storia non viene mai chiamato per nome. COMPARSA: ha poche battute, e le legge il narratore. Va comunque riconosciuto, se no le sue battute finiscono a qualcun altro."
+    },
+    "vicino_occhialuto": {
+      "speed": 0.94,
+      "pitch": 1.0,
+      "gain_db": 0.0,
+      "filters": [],
+      "exaggeration": 0.6,
+      "cfg_weight": 0.45,
+      "descrizione": "Uno dei vicini di campagna che si mettono a duplicare galline: ammette ridendo che quelle in giro sono sue e 'non sono nemmeno tutte', invita Archimede ad andarlo a dire anche agli altri e rifiuta di comprare le uova del concorrente perché 'le nostre sono migliori'. Si riconosce da: Uomo magro con occhiali, capelli castani, gilet a fantasia beige su camicia chiara; sta oltre la staccionata in mezzo alle galline, accanto a una signora affacciata alla finestra di casa. Nella storia non viene mai chiamato per nome. COMPARSA: ha poche battute, e le legge il narratore. Va comunque riconosciuto, se no le sue battute finiscono a qualcun altro."
+    },
+    "vicino_secchi": {
+      "speed": 0.94,
+      "pitch": 1.0,
+      "gain_db": 0.0,
+      "filters": [],
+      "exaggeration": 0.6,
+      "cfg_weight": 0.45,
+      "descrizione": "Il vicino sommerso dalle proprie galline scappate, che si scusa con Archimede e poi prova a rifilare a Paperone un secchio di uova, facendolo infuriare. Si riconosce da: Papero alto e allampanato, capelli castani, gilet verde su camicia a quadretti gialla, pantaloni scuri; porta due grossi secchi di metallo colmi di uova. Nella storia non viene mai chiamato per nome. COMPARSA: ha poche battute, e le legge il narratore. Va comunque riconosciuto, se no le sue battute finiscono a qualcun altro."
+    },
+    "contadino": {
+      "speed": 0.94,
+      "pitch": 1.0,
+      "gain_db": 0.0,
+      "filters": [],
+      "exaggeration": 0.6,
+      "cfg_weight": 0.45,
+      "descrizione": "L'allevatore che vende a Paperone tutte le sue galline ('Le volete tutte?!') e lo saluta quando il camion riparte verso la fattoria successiva. Si riconosce da: Uomo grosso dal muso canino, tuta da lavoro verde su maglia rossa, cappello di paglia, stivali; sta nel pollaio con un secchio di becchime. Nella storia non viene mai chiamato per nome. COMPARSA: ha poche battute, e le legge il narratore. Va comunque riconosciuto, se no le sue battute finiscono a qualcun altro."
+    },
+    "cliente_forchetta": {
+      "speed": 0.94,
+      "pitch": 1.0,
+      "gain_db": 0.0,
+      "filters": [],
+      "exaggeration": 0.6,
+      "cfg_weight": 0.45,
+      "descrizione": "Cliente indignata dal prezzo delle forchette commestibili nell'ultima vignetta ('Cinque dollari per una forchetta?!'). Si riconosce da: Signora con occhiali, capelli castani e collana di perle, vestito rosa; regge un vassoio con una torre di frittelle davanti al banco delle forchette. Nella storia non viene mai chiamato per nome. COMPARSA: ha poche battute, e le legge il narratore. Va comunque riconosciuto, se no le sue battute finiscono a qualcun altro."
+    },
+    "signora_finestra": {
+      "speed": 0.94,
+      "pitch": 1.0,
+      "gain_db": 0.0,
+      "filters": [],
+      "exaggeration": 0.6,
+      "cfg_weight": 0.45,
+      "descrizione": "La vicina che dalla finestra ridacchia mentre il multigallinplicatore sputa fuori un'altra gallina ('Eccone un'altra! Eh, eh!'). Si riconosce da: Papera di mezza età affacciata a una finestra, capelli castani ondulati, abito viola-rosa con collana; sta sopra la macchina che sfornas galline. Nella storia non viene mai chiamato per nome. COMPARSA: ha poche battute, e le legge il narratore. Va comunque riconosciuto, se no le sue battute finiscono a qualcun altro."
+    },
+    "signora_uova": {
+      "speed": 0.94,
+      "pitch": 1.0,
+      "gain_db": 0.0,
+      "filters": [],
+      "exaggeration": 0.6,
+      "cfg_weight": 0.45,
+      "descrizione": "Cliente del banco 'Uova de' Paperoni' che ringrazia e saluta portandosi via cartoni di uova. Si riconosce da: Signora dal muso canino, occhiali, cappotto rosa acceso con borsetta azzurra, capelli castani; regge una pila di cartoni di uova. Nella storia non viene mai chiamato per nome. COMPARSA: ha poche battute, e le legge il narratore. Va comunque riconosciuto, se no le sue battute finiscono a qualcun altro."
+    },
+    "venditore_posate": {
+      "speed": 0.94,
+      "pitch": 1.0,
+      "gain_db": 0.0,
+      "filters": [],
+      "exaggeration": 0.6,
+      "cfg_weight": 0.45,
+      "descrizione": "Il piazzista che a inizio storia cerca di vendere a Paperone l'investimento nelle posate commestibili di riso ('prima le usate e poi le mangiate') e viene cacciato a bastonate dal deposito; a fine storia verrà ricontattato per la torta. Si riconosce da: Tipo dal muso canino, occhi sgranati da imbonitore, cappotto blu a bottoni dorati, pantaloni rossicci, paglietta gialla in testa; regge una valigetta di legno aperta piena di forchette. Nella storia non viene mai chiamato per nome. COMPARSA: ha poche battute, e le legge il narratore. Va comunque riconosciuto, se no le sue battute finiscono a qualcun altro."
+    },
+    "venditore_uova": {
+      "speed": 0.94,
+      "pitch": 1.0,
+      "gain_db": 0.0,
+      "filters": [],
+      "exaggeration": 0.6,
+      "cfg_weight": 0.45,
+      "descrizione": "Il vicino concorrente che inchioda il cartello 'UOVA PIÙ ECONOMICHE' e grida di comprare le sue uova a un dollaro al chilo, facendo crollare ancora i prezzi. Si riconosce da: Uomo dal muso canino con capelli neri e naso grosso, camicia verde militare, martello in mano accanto al cartello sulla staccionata. Nella storia non viene mai chiamato per nome. COMPARSA: ha poche battute, e le legge il narratore. Va comunque riconosciuto, se no le sue battute finiscono a qualcun altro."
+    }
+  },
+  "type_overrides": {
+    "sfx": {
+      "descrizione": "Onomatopee e grugniti: piu' energici e compressi.",
+      "gain_db": 1.5,
+      "filters": [
+        "acompressor=threshold=-20dB:ratio=3:attack=5:release=80"
+      ]
+    },
+    "credits": {
+      "descrizione": "Crediti letti piu' rapidamente e un filo piu' bassi di volume.",
+      "speed": 1.05,
+      "gain_db": -2.0
+    }
+  },
+  "pauses_ms": {
+    "after_title": 900,
+    "after_credits": 1200,
+    "same_panel": 350,
+    "panel_change": 700,
+    "page_end": 1200
+  },
+  "pitch_handled_upstream": true,
+  "pitch_handled_upstream_nota": "Con Chatterbox l'altezza di ogni personaggio si ottiene intonando il RIFERIMENTO prima della generazione (vedi synthesize_chatterbox.py), non trasponendo l'uscita: il phase vocoder applicato a valle lascia artefatti metallici, come si e' visto nei giri 8-9. Quando e' true, assemble.py non applica ne' 'pitch' ne' la correzione su 'pitch_target_hz'.",
+  "channels": {
+    "radio": {
+      "descrizione": "Voce che esce da una ricetrasmittente: passa-banda 300-3000 Hz, compressore e saturazione tanh a 1,5 (ridotta da 2,2 perche' alzava troppo il fondo). Effetto voluto, non correzione: e' l'unico filtro sopravvissuto al giro 12 insieme a quello delle onomatopee.",
+      "gain_db": 1.0,
+      "filters": [
+        "highpass=f=300",
+        "lowpass=f=3000",
+        "acompressor=threshold=-18dB:ratio=4:attack=5:release=50",
+        "aeval=tanh(1.5*val(ch))/1.5:c=same"
+      ]
+    },
+    "sussurro": {
+      "descrizione": "Battuta detta a mezza voce, fra se' e se' o all'orecchio di qualcuno: nel fumetto e' il balloon TRATTEGGIATO (pagina 45, i turisti che sparlano di Paperino). A differenza della radio non e' solo un filtro: un sussurro e' anche meno enfatico e piu' contenuto, quindi il canale abbassa 'exaggeration' e alza 'cfg_weight' gia' in generazione. In post toglie volume e taglia gli estremi, perche' una voce a mezza voce perde corpo sotto e brillantezza sopra.",
+      "gain_db": -7.0,
+      "filters": [
+        "highpass=f=200",
+        "lowpass=f=6500",
+        "acompressor=threshold=-24dB:ratio=2:attack=12:release=200"
+      ],
+      "exaggeration": 0.35,
+      "cfg_weight": 0.6
+    }
+  },
+  "clip_cleanup": {
+    "descrizione": "Pulizia della singola clip generata, prima della catena di carattere. Due guasti tipici di Chatterbox: i vuoti di secondi in mezzo alla frase (oltre 'max_gap_ms' si accorciano a 'keep_gap_ms', tenendo un pezzo di silenzio vero e non una giunta digitale), e la coda spuria, cioe' un frammento forte tagliato di netto a fine file dopo che la battuta e' gia' finita, che all'ascolto e' un colpo secco fra due battute. La coda si toglie solo se e' piu' corta di 'coda_spuria_max_ms', isolata da almeno 'coda_silenzio_min_ms' di silenzio e attaccata alla fine: una parola vera dopo una pausa e' piu' lunga, e non va mangiata.",
+    "attiva": true,
+    "trim_edges_ms": 120,
+    "max_gap_ms": 300,
+    "keep_gap_ms": 120,
+    "coda_spuria_max_ms": 150,
+    "coda_silenzio_min_ms": 250,
+    "dissolvenza_ms": 15,
+    "dissolvenza_max_dbfs": -20.0
+  },
+  "cast_nota": "Cast proposto da poc/ricognizione_cast.py e DA RIVEDERE. Le descrizioni servono all'estrazione del copione, che senza di esse sbaglia un'attribuzione su tre. I valori di voce (speed, pitch, exaggeration, cfg_weight) sono di partenza, non tarati: vanno regolati a orecchio, uno per volta."
+}

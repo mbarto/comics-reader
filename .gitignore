@@ -2,6 +2,8 @@
 pages/
 poc/script/
 poc/clips/
+poc/estrazione/
+poc/revisione/
 poc/out/
 video/
 
@@ -15,6 +17,7 @@ da-salvare/
 # --- Ricostruibile con poc/setup.sh (14,5 GB)
 poc/.venv/
 poc/.venv-chatterbox/
+poc/.venv-estrazione/
 poc/models/
 
 # --- Ricostruibile con poc/prepare_voice.sh

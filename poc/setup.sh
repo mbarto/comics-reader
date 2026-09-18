@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Ricostruisce da zero l'ambiente del progetto: i due virtualenv e i pesi del modello.
+# Ricostruisce da zero l'ambiente del progetto: i tre virtualenv e i pesi del modello.
 #
 #   ./poc/setup.sh              tutto
 #   ./poc/setup.sh --venv       solo gli ambienti Python
@@ -8,9 +8,12 @@
 # Serve perche' il resto del progetto non e' ricostruibile senza: 11,5 GB di virtualenv e
 # 3,0 GB di pesi che, se si perdono, costano il giro piu' doloroso di tutto il lavoro.
 #
-# PERCHE' DUE AMBIENTI: i due modelli TTS provati hanno dipendenze incompatibili fra loro.
+# PERCHE' TRE AMBIENTI: i due modelli TTS provati hanno dipendenze incompatibili fra loro.
 # Chatterbox pretende torch 2.6 e transformers 5.x, coqui-tts torch 2.5 e transformers 4.x.
 # Il venv di coqui resta perche' ci girano le misure e il montaggio (numpy, soundfile, ffmpeg).
+# Il terzo, .venv-estrazione, sta a parte per il motivo opposto: estrarre il copione dalle pagine
+# non ha niente a che fare con la sintesi, e non deve trascinarsi dietro 11 GB di torch per due
+# librerie da 48 MB.
 #
 # TRAPPOLE, tutte incontrate sul campo e tutte gia' applicate qui sotto:
 #  - UV_HTTP_TIMEOUT / UV_CONCURRENT_DOWNLOADS: con i valori di default uv multiplexa decine di
@@ -41,7 +44,7 @@ crea_venv() {
     exit 1
   fi
 
-  echo "== Ambiente 1/2: montaggio e misure (piu' XTTS-v2, ormai superato)"
+  echo "== Ambiente 1/3: montaggio e misure (piu' XTTS-v2, ormai superato)"
   "$UV" venv "$ROOT/poc/.venv" --python 3.10
   VIRTUAL_ENV="$ROOT/poc/.venv" "$UV" pip install \
     torch==2.5.1+cu121 torchaudio==2.5.1+cu121 --index-url https://download.pytorch.org/whl/cu121
@@ -49,10 +52,15 @@ crea_venv() {
     "coqui-tts==0.27.5" "transformers>=4.57,<5" numpy soundfile pillow
 
   echo
-  echo "== Ambiente 2/2: sintesi con Chatterbox"
+  echo "== Ambiente 2/3: sintesi con Chatterbox"
   "$UV" venv "$ROOT/poc/.venv-chatterbox" --python 3.10
   VIRTUAL_ENV="$ROOT/poc/.venv-chatterbox" "$UV" pip install \
     "chatterbox-tts==0.1.7" "setuptools<81" soundfile
+
+  echo
+  echo "== Ambiente 3/3: estrazione del copione dalle pagine (48 MB, niente torch)"
+  "$UV" venv "$ROOT/poc/.venv-estrazione" --python 3.10
+  VIRTUAL_ENV="$ROOT/poc/.venv-estrazione" "$UV" pip install anthropic pillow
 }
 
 scarica_pesi() {
@@ -87,6 +95,8 @@ echo "== Verifica"
 "$ROOT/poc/.venv-chatterbox/bin/python" -c "
 import torch
 print(f'  ambiente sintesi: torch {torch.__version__}, cuda {torch.cuda.is_available()}')"
+"$ROOT/poc/.venv-estrazione/bin/python" -c "
+import anthropic, PIL; print(f'  ambiente estrazione: anthropic {anthropic.__version__}')"
 for f in "${PESI[@]}"; do
   [[ -s "$MODELLI/$f" ]] || { echo "  MANCA $f" >&2; exit 1; }
 done
