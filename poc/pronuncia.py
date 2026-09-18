@@ -321,6 +321,18 @@ def nomi_della_storia(voices: Path | None) -> list[tuple[str, str]]:
     return nomi
 
 
+def muta(entry: dict) -> bool:
+    """Vero se in questa battuta non c'e' una sola lettera da leggere.
+
+    Succede: un balloon con dentro solo "!" o "?", che l'estrattore raccoglie perche' sulla
+    pagina c'e' - e il disegnatore l'ha messo apposta, e' la faccia di chi resta senza parole.
+    Da leggere pero' non c'e' niente, e Chatterbox su un testo senza fonemi non tace: va in
+    errore dentro l'analizzatore di allineamento (max() su un tensore vuoto). Sintesi e
+    montaggio la saltano, ed e' questa la funzione che glielo dice.
+    """
+    return not PAROLA.search(entry.get("text_tts") or entry.get("text") or "")
+
+
 def carica(percorso: Path) -> list[Path]:
     if percorso.is_dir():
         return sorted(percorso.glob("p*.json"))
@@ -399,7 +411,7 @@ def main():
                 if not args.scrivi:
                     print(f"  {f.stem} #{e['seq']}  {e['text']}")
                     print(f"      -> {tts}")
-            if not PAROLA.search(tts):
+            if muta(e):
                 mute.append(f"{f.stem} #{e['seq']}  {e['text']!r}")
             e["text_tts"] = tts
         if args.scrivi:

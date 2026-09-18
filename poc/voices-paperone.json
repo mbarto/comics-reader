@@ -26,144 +26,173 @@
       "speed": 0.94,
       "pitch": 1.0,
       "gain_db": 0.0,
-      "filters": [],
-      "exaggeration": 0.6,
-      "cfg_weight": 0.45,
-      "descrizione": "Didascalie, titolo, crediti e le onomatopee che non vengono da nessuno. Neutro, un filo piu' lento e posato."
+      "filters": [
+        "highpass=f=100"
+      ],
+      "exaggeration": 0.7,
+      "cfg_weight": 0.4,
+      "descrizione": "Didascalie, titolo, crediti e le onomatopee che non vengono da nessuno. Neutro, un filo piu' lento e posato.",
+      "descrizione_regia": "Didascalie, titolo, crediti e le onomatopee che non vengono da nessuno."
     },
     "paperone": {
-      "speed": 1.0,
-      "pitch": 1.0,
+      "speed": 0.98,
+      "pitch": 0.9,
       "gain_db": 0.0,
-      "filters": [],
-      "exaggeration": 0.6,
-      "cfg_weight": 0.45,
-      "descrizione": "Il protagonista: avarissimo miliardario che compra da Archimede la stampante 3D e la usa per stampare altre stampanti, rovinando il mercato prima dei bastoni, poi delle uova. Comanda tutti, sbraita, conta i soldi, dà ordini a Miss Paperett e aggredisce Archimede quando i prezzi crollano. Si riconosce da: Papero anziano con basettoni e piumaggio bianco, redingote rossa, ghette blu, cilindro nero con fascia azzurra, sempre col bastone da passeggio ricurvo azzurro (che si rompe a pagina 1). Parla esclamando 'Sgrunt!', 'Umpf!', 'Uack!'"
+      "filters": [
+        "highpass=f=100"
+      ],
+      "exaggeration": 0.9,
+      "cfg_weight": 0.35,
+      "descrizione": "Il protagonista: avarissimo miliardario che compra da Archimede la stampante 3D e la usa per stampare altre stampanti, rovinando il mercato prima dei bastoni, poi delle uova. Comanda tutti, sbraita, conta i soldi, dà ordini a Miss Paperett e aggredisce Archimede quando i prezzi crollano. Si riconosce da: Papero anziano con basettoni e piumaggio bianco, redingote rossa, ghette blu, cilindro nero con fascia azzurra, sempre col bastone da passeggio ricurvo azzurro (che si rompe a pagina 1). Parla esclamando 'Sgrunt!', 'Umpf!', 'Uack!'",
+      "descrizione_regia": "Anziano che sbraita e comanda: bassa ma con molta energia."
     },
     "archimede": {
-      "speed": 1.0,
-      "pitch": 1.0,
+      "speed": 1.04,
+      "pitch": 1.12,
       "gain_db": 0.0,
       "filters": [],
-      "exaggeration": 0.6,
-      "cfg_weight": 0.45,
-      "descrizione": "L'inventore: cede a Paperone la stampante 3D per cento dollari, poi inventa il 'multigallinplicatore' che duplica le galline e scatena il caos di uova. Ottimista, si scusa sempre, dice che tutto si risolverà da sé; alla fine ferma le macchine nel suo laboratorio. Si riconosce da: Papero magro e alto, camicia giallo brillante con gilet nero e pantaloni marroni, cappello di paglia sformato in testa, occhialini tondi sul becco. In campagna sta fra galline e campanelle metalliche del suo macchinario."
+      "exaggeration": 0.75,
+      "cfg_weight": 0.4,
+      "descrizione": "L'inventore: cede a Paperone la stampante 3D per cento dollari, poi inventa il 'multigallinplicatore' che duplica le galline e scatena il caos di uova. Ottimista, si scusa sempre, dice che tutto si risolverà da sé; alla fine ferma le macchine nel suo laboratorio. Si riconosce da: Papero magro e alto, camicia giallo brillante con gilet nero e pantaloni marroni, cappello di paglia sformato in testa, occhialini tondi sul becco. In campagna sta fra galline e campanelle metalliche del suo macchinario.",
+      "descrizione_regia": "Inventore ottimista che si scusa sempre: acuto e svelto."
     },
     "paperett": {
-      "speed": 1.0,
-      "pitch": 1.0,
+      "speed": 0.95,
+      "pitch": 1.19,
       "gain_db": 0.0,
       "filters": [],
-      "exaggeration": 0.6,
+      "exaggeration": 0.55,
       "cfg_weight": 0.45,
-      "descrizione": "La segretaria fedele di Paperone: gli porta i conti, lo avverte ('ho un brutto presentimento'), lo chiama sempre 'principale', lo segue in campagna a comprare galline e infine lo salva a bordo di un canotto gonfiabile sul mare di uova. Si riconosce da: Papera anziana, capelli grigi raccolti a chignon, occhiali, corpetto nero e lunga gonna lilla con scarpe viola; porta quasi sempre una cartellina/tavoletta marrone sotto il braccio. Tono rispettoso e preoccupato."
+      "descrizione": "La segretaria fedele di Paperone: gli porta i conti, lo avverte ('ho un brutto presentimento'), lo chiama sempre 'principale', lo segue in campagna a comprare galline e infine lo salva a bordo di un canotto gonfiabile sul mare di uova. Si riconosce da: Papera anziana, capelli grigi raccolti a chignon, occhiali, corpetto nero e lunga gonna lilla con scarpe viola; porta quasi sempre una cartellina/tavoletta marrone sotto il braccio. Tono rispettoso e preoccupato.",
+      "descrizione_regia": "Segretaria posata: acuta ma calma e piu' lenta, il contrario della commessa."
     },
     "commessa": {
-      "speed": 1.0,
-      "pitch": 1.0,
+      "speed": 1.03,
+      "pitch": 1.26,
       "gain_db": 0.0,
       "filters": [],
-      "exaggeration": 0.6,
-      "cfg_weight": 0.45,
-      "descrizione": "La commessa sfaticata dei negozi di Paperone ('Bastoni de' Paperoni', poi il banco delle uova e quello delle forchette commestibili): sta sempre fuori a bighellonare invece di servire, risponde acida che non ci sono clienti, tira sul prezzo con il capo e alla fine piazza le forchette a cinque dollari. Si riconosce da: Papera giovane con vistosa capigliatura bionda cotonata, completo nero elegante con polsini rosa, scarpe rosso-arancio; gioca con uno yo-yo verde o fa palloncini con la gomma da masticare. Tono annoiato e insolente. Nella storia non viene mai chiamato per nome."
+      "exaggeration": 0.85,
+      "cfg_weight": 0.35,
+      "descrizione": "La commessa sfaticata dei negozi di Paperone ('Bastoni de' Paperoni', poi il banco delle uova e quello delle forchette commestibili): sta sempre fuori a bighellonare invece di servire, risponde acida che non ci sono clienti, tira sul prezzo con il capo e alla fine piazza le forchette a cinque dollari. Si riconosce da: Papera giovane con vistosa capigliatura bionda cotonata, completo nero elegante con polsini rosa, scarpe rosso-arancio; gioca con uno yo-yo verde o fa palloncini con la gomma da masticare. Tono annoiato e insolente. Nella storia non viene mai chiamato per nome.",
+      "descrizione_regia": "Acida e sbrigativa: la piu' acuta, svelta e tagliente."
     },
     "clienti_stampanti": {
-      "speed": 1.0,
-      "pitch": 1.0,
+      "speed": 1.05,
+      "pitch": 1.06,
       "gain_db": 0.0,
       "filters": [],
-      "exaggeration": 0.6,
-      "cfg_weight": 0.45,
-      "descrizione": "I paperopolesi entusiasti che fanno la fila e comprano le stampanti 3D a pochi dollari: salutano Paperone al negozio, si vantano dell'affare e non aspettano di provarla a casa. Si riconosce da: Gruppo misto in coda davanti a 'Stampanti 3D de' Paperoni': due papere che portano insieme uno scatolone, una papera dai capelli rossi con la stampante in spalla e un papero col gilet verde che cammina accanto a lei. Nella storia non viene mai chiamato per nome."
+      "exaggeration": 0.85,
+      "cfg_weight": 0.35,
+      "descrizione": "I paperopolesi entusiasti che fanno la fila e comprano le stampanti 3D a pochi dollari: salutano Paperone al negozio, si vantano dell'affare e non aspettano di provarla a casa. Si riconosce da: Gruppo misto in coda davanti a 'Stampanti 3D de' Paperoni': due papere che portano insieme uno scatolone, una papera dai capelli rossi con la stampante in spalla e un papero col gilet verde che cammina accanto a lei. Nella storia non viene mai chiamato per nome.",
+      "descrizione_regia": "Folla entusiasta: svelti e sopra le righe."
     },
     "cuoco": {
-      "speed": 1.0,
-      "pitch": 1.0,
+      "speed": 0.96,
+      "pitch": 0.85,
       "gain_db": 0.0,
       "filters": [],
       "exaggeration": 0.6,
-      "cfg_weight": 0.45,
-      "descrizione": "Il cuoco del 'Diner de' Paperoni': a ogni ordinazione di Paperone risponde proponendo uova in tutti i modi (frittata, al tegamino, alla coque, strapazzate), perché con il crollo dei prezzi in cucina ha solo uova; è lui a rivelare che la colpa è delle galline 3D di Archimede. Si riconosce da: Omone dal muso canino, ghigno larghissimo e barba ispida, camicia verde con maniche rimboccate, grembiule bianco e berretto rosso da cuoco; sta dietro il bancone del vagone-ristorante con lo strofinaccio. Nella storia non viene mai chiamato per nome."
+      "cfg_weight": 0.5,
+      "descrizione": "Il cuoco del 'Diner de' Paperoni': a ogni ordinazione di Paperone risponde proponendo uova in tutti i modi (frittata, al tegamino, alla coque, strapazzate), perché con il crollo dei prezzi in cucina ha solo uova; è lui a rivelare che la colpa è delle galline 3D di Archimede. Si riconosce da: Omone dal muso canino, ghigno larghissimo e barba ispida, camicia verde con maniche rimboccate, grembiule bianco e berretto rosso da cuoco; sta dietro il bancone del vagone-ristorante con lo strofinaccio. Nella storia non viene mai chiamato per nome.",
+      "descrizione_regia": "Omone dietro il banco: la voce piu' bassa del cast, posata."
     },
     "acchiappapolli": {
       "speed": 0.94,
       "pitch": 1.0,
       "gain_db": 0.0,
-      "filters": [],
-      "exaggeration": 0.6,
-      "cfg_weight": 0.45,
+      "filters": [
+        "highpass=f=100"
+      ],
+      "exaggeration": 0.7,
+      "cfg_weight": 0.4,
       "descrizione": "Gli addetti comunali mandati a catturare le galline: fanno largo con i retini, dicono di portarle fuori città per ordine del sindaco, poi vengono travolti e chiedono aiuto. Si riconosce da: Due-tre uomini in tuta e berretto verde, con grandi retini a manico lungo e un camioncino blu, sepolti fra galline e uova. Nella storia non viene mai chiamato per nome. COMPARSA: ha poche battute, e le legge il narratore. Va comunque riconosciuto, se no le sue battute finiscono a qualcun altro."
     },
     "vicino_occhialuto": {
       "speed": 0.94,
       "pitch": 1.0,
       "gain_db": 0.0,
-      "filters": [],
-      "exaggeration": 0.6,
-      "cfg_weight": 0.45,
+      "filters": [
+        "highpass=f=100"
+      ],
+      "exaggeration": 0.7,
+      "cfg_weight": 0.4,
       "descrizione": "Uno dei vicini di campagna che si mettono a duplicare galline: ammette ridendo che quelle in giro sono sue e 'non sono nemmeno tutte', invita Archimede ad andarlo a dire anche agli altri e rifiuta di comprare le uova del concorrente perché 'le nostre sono migliori'. Si riconosce da: Uomo magro con occhiali, capelli castani, gilet a fantasia beige su camicia chiara; sta oltre la staccionata in mezzo alle galline, accanto a una signora affacciata alla finestra di casa. Nella storia non viene mai chiamato per nome. COMPARSA: ha poche battute, e le legge il narratore. Va comunque riconosciuto, se no le sue battute finiscono a qualcun altro."
     },
     "vicino_secchi": {
       "speed": 0.94,
       "pitch": 1.0,
       "gain_db": 0.0,
-      "filters": [],
-      "exaggeration": 0.6,
-      "cfg_weight": 0.45,
+      "filters": [
+        "highpass=f=100"
+      ],
+      "exaggeration": 0.7,
+      "cfg_weight": 0.4,
       "descrizione": "Il vicino sommerso dalle proprie galline scappate, che si scusa con Archimede e poi prova a rifilare a Paperone un secchio di uova, facendolo infuriare. Si riconosce da: Papero alto e allampanato, capelli castani, gilet verde su camicia a quadretti gialla, pantaloni scuri; porta due grossi secchi di metallo colmi di uova. Nella storia non viene mai chiamato per nome. COMPARSA: ha poche battute, e le legge il narratore. Va comunque riconosciuto, se no le sue battute finiscono a qualcun altro."
     },
     "contadino": {
       "speed": 0.94,
       "pitch": 1.0,
       "gain_db": 0.0,
-      "filters": [],
-      "exaggeration": 0.6,
-      "cfg_weight": 0.45,
+      "filters": [
+        "highpass=f=100"
+      ],
+      "exaggeration": 0.7,
+      "cfg_weight": 0.4,
       "descrizione": "L'allevatore che vende a Paperone tutte le sue galline ('Le volete tutte?!') e lo saluta quando il camion riparte verso la fattoria successiva. Si riconosce da: Uomo grosso dal muso canino, tuta da lavoro verde su maglia rossa, cappello di paglia, stivali; sta nel pollaio con un secchio di becchime. Nella storia non viene mai chiamato per nome. COMPARSA: ha poche battute, e le legge il narratore. Va comunque riconosciuto, se no le sue battute finiscono a qualcun altro."
     },
     "cliente_forchetta": {
       "speed": 0.94,
       "pitch": 1.0,
       "gain_db": 0.0,
-      "filters": [],
-      "exaggeration": 0.6,
-      "cfg_weight": 0.45,
+      "filters": [
+        "highpass=f=100"
+      ],
+      "exaggeration": 0.7,
+      "cfg_weight": 0.4,
       "descrizione": "Cliente indignata dal prezzo delle forchette commestibili nell'ultima vignetta ('Cinque dollari per una forchetta?!'). Si riconosce da: Signora con occhiali, capelli castani e collana di perle, vestito rosa; regge un vassoio con una torre di frittelle davanti al banco delle forchette. Nella storia non viene mai chiamato per nome. COMPARSA: ha poche battute, e le legge il narratore. Va comunque riconosciuto, se no le sue battute finiscono a qualcun altro."
     },
     "signora_finestra": {
       "speed": 0.94,
       "pitch": 1.0,
       "gain_db": 0.0,
-      "filters": [],
-      "exaggeration": 0.6,
-      "cfg_weight": 0.45,
+      "filters": [
+        "highpass=f=100"
+      ],
+      "exaggeration": 0.7,
+      "cfg_weight": 0.4,
       "descrizione": "La vicina che dalla finestra ridacchia mentre il multigallinplicatore sputa fuori un'altra gallina ('Eccone un'altra! Eh, eh!'). Si riconosce da: Papera di mezza età affacciata a una finestra, capelli castani ondulati, abito viola-rosa con collana; sta sopra la macchina che sfornas galline. Nella storia non viene mai chiamato per nome. COMPARSA: ha poche battute, e le legge il narratore. Va comunque riconosciuto, se no le sue battute finiscono a qualcun altro."
     },
     "signora_uova": {
       "speed": 0.94,
       "pitch": 1.0,
       "gain_db": 0.0,
-      "filters": [],
-      "exaggeration": 0.6,
-      "cfg_weight": 0.45,
+      "filters": [
+        "highpass=f=100"
+      ],
+      "exaggeration": 0.7,
+      "cfg_weight": 0.4,
       "descrizione": "Cliente del banco 'Uova de' Paperoni' che ringrazia e saluta portandosi via cartoni di uova. Si riconosce da: Signora dal muso canino, occhiali, cappotto rosa acceso con borsetta azzurra, capelli castani; regge una pila di cartoni di uova. Nella storia non viene mai chiamato per nome. COMPARSA: ha poche battute, e le legge il narratore. Va comunque riconosciuto, se no le sue battute finiscono a qualcun altro."
     },
     "venditore_posate": {
       "speed": 0.94,
       "pitch": 1.0,
       "gain_db": 0.0,
-      "filters": [],
-      "exaggeration": 0.6,
-      "cfg_weight": 0.45,
+      "filters": [
+        "highpass=f=100"
+      ],
+      "exaggeration": 0.7,
+      "cfg_weight": 0.4,
       "descrizione": "Il piazzista che a inizio storia cerca di vendere a Paperone l'investimento nelle posate commestibili di riso ('prima le usate e poi le mangiate') e viene cacciato a bastonate dal deposito; a fine storia verrà ricontattato per la torta. Si riconosce da: Tipo dal muso canino, occhi sgranati da imbonitore, cappotto blu a bottoni dorati, pantaloni rossicci, paglietta gialla in testa; regge una valigetta di legno aperta piena di forchette. Nella storia non viene mai chiamato per nome. COMPARSA: ha poche battute, e le legge il narratore. Va comunque riconosciuto, se no le sue battute finiscono a qualcun altro."
     },
     "venditore_uova": {
       "speed": 0.94,
       "pitch": 1.0,
       "gain_db": 0.0,
-      "filters": [],
-      "exaggeration": 0.6,
-      "cfg_weight": 0.45,
+      "filters": [
+        "highpass=f=100"
+      ],
+      "exaggeration": 0.7,
+      "cfg_weight": 0.4,
       "descrizione": "Il vicino concorrente che inchioda il cartello 'UOVA PIÙ ECONOMICHE' e grida di comprare le sue uova a un dollaro al chilo, facendo crollare ancora i prezzi. Si riconosce da: Uomo dal muso canino con capelli neri e naso grosso, camicia verde militare, martello in mano accanto al cartello sulla staccionata. Nella storia non viene mai chiamato per nome. COMPARSA: ha poche battute, e le legge il narratore. Va comunque riconosciuto, se no le sue battute finiscono a qualcun altro."
     }
   },
@@ -230,5 +259,5 @@
     "dissolvenza_ms": 15,
     "dissolvenza_max_dbfs": -20.0
   },
-  "cast_nota": "Cast proposto da poc/ricognizione_cast.py e DA RIVEDERE. Le descrizioni servono all'estrazione del copione, che senza di esse sbaglia un'attribuzione su tre. I valori di voce (speed, pitch, exaggeration, cfg_weight) sono di partenza, non tarati: vanno regolati a orecchio, uno per volta."
+  "cast_nota": "Cast proposto da poc/ricognizione_cast.py e DA RIVEDERE. Le descrizioni servono all'estrazione del copione, che senza di esse sbaglia un'attribuzione su tre. I valori di voce sono una prima passata di regia scritta a mano il 2026-09-18 leggendo le descrizioni, non tarata all'ascolto: sette altezze spaziate di circa un semitono dentro lo stesso arco del PoC (0,85-1,26). A quella densità l'altezza da sola non basta a distinguere i personaggi - la variabilità del modello fra una presa e l'altra è dello stesso ordine - e il resto lo fanno velocità, enfasi e contesto. Le comparse stanno sui parametri del narratore, come deciso al §8-bis. Da regolare a orecchio, uno per volta."
 }

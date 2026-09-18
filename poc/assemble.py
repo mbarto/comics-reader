@@ -19,6 +19,7 @@ Si concatenano invece i pezzi lavorati e si normalizza una volta sola, alla fine
 
 import argparse
 import json
+import re
 import shlex
 import subprocess
 import sys
@@ -26,6 +27,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from intonation import describe as measure_intonation
+from pronuncia import muta
 
 POC = Path(__file__).resolve().parent
 SR = 24000  # frequenza di uscita del modello (uguale per XTTS-v2 e Chatterbox)
@@ -38,17 +40,23 @@ def run(cmd):
     return proc
 
 
+# Le strade della storia in lavorazione. Di suo sono quelle del PoC; main() le sposta con
+# --copione/--clips quando si monta una seconda storia, che ha clip e uscita sue.
+COPIONE = POC / "script"
+CLIPS = POC / "clips"
+
+
 def script_path(page):
-    return POC / "script" / f"p{page}.json"
+    return COPIONE / f"p{page}.json"
 
 
 def clips_dir(page):
-    return POC / "clips" / f"p{page}"
+    return CLIPS / f"p{page}"
 
 
 def pagine_disponibili():
     """Le pagine per cui esiste uno script, in ordine di lettura."""
-    return sorted(int(p.stem[1:]) for p in (POC / "script").glob("p*.json") if p.stem[1:].isdigit())
+    return sorted(int(p.stem[1:]) for p in COPIONE.glob("p*.json") if p.stem[1:].isdigit())
 
 
 def pitch_ratio(src, preset, target_hz):
@@ -224,6 +232,8 @@ def lavora_pagina(page, voices):
     pieces = []
     entries = script["entries"]
     for entry in entries:
+        if muta(entry):
+            continue     # niente lettere, niente clip: vedi pronuncia.muta()
         seq, speaker = entry["seq"], entry["speaker"]
         src = src_dir / f"{seq:02d}_{speaker}.wav"
         if not src.exists():
@@ -288,7 +298,8 @@ def lavora_pagina(page, voices):
 
 def monta(pieces, nome, work_dir):
     """Concatena i pezzi, normalizza una volta sola e scrive wav + mp3."""
-    out_dir = POC / "out" / "pagine" if nome.startswith("p") and nome != "storia" else POC / "out"
+    out_dir = (POC / "out" / "pagine"
+               if re.fullmatch(r"p\d+", nome) else POC / "out")
     out_dir.mkdir(parents=True, exist_ok=True)
 
     listfile = work_dir / f"concat_{nome}.txt"
@@ -315,17 +326,28 @@ def monta(pieces, nome, work_dir):
 
 
 def main():
+    global COPIONE, CLIPS
     ap = argparse.ArgumentParser()
     ap.add_argument("--page", type=int, help="monta una sola pagina")
     ap.add_argument("--all", action="store_true", help="monta ogni pagina in un file separato")
     ap.add_argument("--story", action="store_true",
                     help="monta tutte le pagine in un unico file, normalizzato una volta sola")
+    ap.add_argument("--copione", type=Path, default=COPIONE,
+                    help="cartella dei pNN.json (default: poc/script)")
+    ap.add_argument("--voci", type=Path, default=POC / "voices.json",
+                    help="il voices.json della storia (default: poc/voices.json)")
+    ap.add_argument("--clips", type=Path, default=CLIPS,
+                    help="la cartella delle clip da montare (default: poc/clips)")
+    ap.add_argument("--nome", default="storia",
+                    help="come si chiama il file montato con --story (default: storia)")
     args = ap.parse_args()
 
-    voices = json.loads((POC / "voices.json").read_text(encoding="utf-8"))
+    COPIONE, CLIPS = args.copione, args.clips
+
+    voices = json.loads(args.voci.read_text(encoding="utf-8"))
     pagine = pagine_disponibili()
     if not pagine:
-        sys.exit("Nessuno script in poc/script/: niente da montare.")
+        sys.exit(f"Nessuno script in {COPIONE}: niente da montare.")
 
     if args.page:
         pieces = lavora_pagina(args.page, voices)
@@ -338,8 +360,7 @@ def main():
         for page in pagine:
             print(f"-- pagina {page}", flush=True)
             tutti.extend(lavora_pagina(page, voices))
-        work = POC / "clips"
-        monta(tutti, "storia", work)
+        monta(tutti, args.nome, CLIPS)
         return
 
     if args.all:

@@ -2,7 +2,8 @@
 """Fase 4 — sintesi con Chatterbox Multilingual.
 
 Legge poc/script/pNN.json e poc/voices.json e scrive una clip WAV per balloon in
-poc/clips/pNN/, che assemble.py poi monta.
+poc/clips/pNN/, che assemble.py poi monta. Con --copione, --voci e --clips si punta a una
+storia diversa: una seconda storia ha un cast suo e non deve scrivere sopra le clip della prima.
 
 Perche' Chatterbox e non XTTS-v2 (poc/synthesize.py, ormai superato): XTTS produce un
 timbro che all'ascolto risulta metallico anche senza alcun post-processing, e nessuna
@@ -39,6 +40,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from check_clips import difetti, difetti_grezza, da_rigenerare, gravita   # noqa: E402
 from intonation import f0_track                          # noqa: E402
+from pronuncia import muta                               # noqa: E402
 
 POC = Path(__file__).resolve().parent
 LANGUAGE = "it"
@@ -134,8 +136,9 @@ def impronta(entry, preset, ex, cfg, scelta_altezza=False):
     return hashlib.sha256(json.dumps(dati, sort_keys=True).encode()).hexdigest()[:16]
 
 
-def pagine_disponibili():
-    return sorted(int(p.stem[1:]) for p in (POC / "script").glob("p*.json") if p.stem[1:].isdigit())
+def pagine_disponibili(copione=None):
+    return sorted(int(p.stem[1:]) for p in (copione or POC / "script").glob("p*.json")
+                  if p.stem[1:].isdigit())
 
 
 def main():
@@ -156,15 +159,23 @@ def main():
     ap.add_argument("--dry-run", action="store_true",
                     help="dice solo cosa rifarebbe, senza caricare il modello")
     ap.add_argument("--cpu", action="store_true")
+    # Le tre strade della storia. Di suo sono quelle del PoC; una seconda storia ha il suo
+    # copione, il suo cast e le sue clip, e non deve passare sopra a quella di prima.
+    ap.add_argument("--copione", type=Path, default=POC / "script",
+                    help="cartella dei pNN.json (default: poc/script)")
+    ap.add_argument("--voci", type=Path, default=POC / "voices.json",
+                    help="il voices.json della storia (default: poc/voices.json)")
+    ap.add_argument("--clips", type=Path, default=POC / "clips",
+                    help="dove finiscono le clip (default: poc/clips)")
     args = ap.parse_args()
 
     if args.only and not args.page:
         ap.error("--only vale su una pagina sola: aggiungi --page N")
-    pagine = [args.page] if args.page else (pagine_disponibili() if args.all else [])
+    pagine = [args.page] if args.page else (pagine_disponibili(args.copione) if args.all else [])
     if not pagine:
         ap.error("scegli --page N o --all")
 
-    voices = json.loads((POC / "voices.json").read_text(encoding="utf-8"))
+    voices = json.loads(args.voci.read_text(encoding="utf-8"))
     speakers = voices["speakers"]
     channels = voices.get("channels", {})
     # il 'pitch' del personaggio e' lo scostamento dalla voce reale di Mauro: il bersaglio
@@ -178,11 +189,11 @@ def main():
     # nemmeno (sono ~30 s di caricamento e 2,5 GB di VRAM per non generare niente).
     lavoro = []
     for page in pagine:
-        path = POC / "script" / f"p{page}.json"
+        path = args.copione / f"p{page}.json"
         if not path.exists():
             sys.exit(f"Manca {path}: la pagina {page} non e' ancora trascritta.")
         script = json.loads(path.read_text(encoding="utf-8"))
-        out_dir = POC / "clips" / f"p{page}"
+        out_dir = args.clips / f"p{page}"
         out_dir.mkdir(parents=True, exist_ok=True)
         cache_file = out_dir / ".cache.json"
         cache = json.loads(cache_file.read_text()) if cache_file.exists() else {}
@@ -193,6 +204,9 @@ def main():
 
         da_fare = []
         for entry in entries:
+            if muta(entry):
+                print(f"  seq {entry['seq']}: niente da leggere ({entry['text']!r}), salto")
+                continue
             preset = speakers.get(entry["speaker"], {})
             _, canale = canale_di(entry, channels)
             ex_base = canale.get("exaggeration", preset.get("exaggeration", 0.7))

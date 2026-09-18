@@ -51,8 +51,8 @@
   },
   "sigle_nota": "Sigle e parole con dentro una cifra: il TTS le compita o le storpia, e non passano dalle altre regole perché non sono fatte di sole lettere. Si sostituiscono per intere, prima che i numeri diventino parole - se no '3D' diventa 'treD'.",
   "sigle": {
-    "3D": "tre di",
-    "2D": "due di",
+    "3D": "tridì",
+    "2D": "bidì",
     "TV": "tivù",
     "CD": "cidì",
     "DVD": "divudì",

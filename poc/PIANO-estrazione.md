@@ -7,9 +7,10 @@ la trascrizione.** Questo documento è il piano per chiudere quel buco.
 Stato: **fasi 1, 2, 4, 5, 6 fatte e la 8 cominciata.** Testo, battute, ordine e pronuncia sono
 chiusi; l'attribuzione sta al 90% su Park Ranger. Il giro completo - PDF, cast, copione, pronuncia,
 revisione - gira su una seconda storia mai trascritta (§8-bis), ma senza copione d'oro non se ne
-puo' misurare la bonta'. La storia estratta in automatico arriva fino all'audio
-(poc/out/storia-automatica.mp3, §6-ter), e quello e' l'ascolto che manca. Speso finora in
-chiamate al modello: $4.55, di cui $0.00 per la fase 6. Aggiornato il 2026-09-18.
+puo' misurare la bonta'. Tutt'e due le storie arrivano fino all'audio senza sessione
+(poc/out/storia-automatica.mp3 e poc/out/paperone.mp3, §6-ter e §8-ter): il giudizio che manca
+e' l'ascolto. Speso finora in chiamate al modello: $5.61, di cui $1.06 per la storia nuova e
+$0.00 per la fase 6. Aggiornato il 2026-09-18.
 
 ---
 
@@ -724,7 +725,7 @@ parla, invece di costruirci sopra.
 | ~~5~~ | ~~`rivedi.py`~~ | **fatto** — §6-bis. Da misurare sul campo se una pagina si rivede in meno di 5 minuti |
 | ~~6~~ | ~~dizionario di pronuncia deterministico per `text_tts`~~ | **fatto** — §6-ter. 130 delle 131 pronunce del PoC tornano identiche, senza chiamare il modello. Resta da ascoltarle |
 | 7 | segmentazione automatica delle voltate nel filmato | `stack_video.py` senza `--da`/`--a` a mano |
-| 8 | prova su una storia mai vista — **cominciata** | il giro gira su *Le copie a ripetizione* (§8-bis). Per un numero servono poche pagine d'oro trascritte a mano su quella storia |
+| 8 | prova su una storia mai vista — **arrivata in fondo, senza un numero** | *Le copie a ripetizione*, dieci pagine, dal PDF all'audio: $1.06 e un'ora (§8-ter). Per un numero servono ancora poche pagine d'oro trascritte a mano su quella storia |
 
 La fase 8 è la sola che conta davvero per la domanda «questo progetto va avanti?». Tutto ciò che sta
 sopra è tarato sulle stesse 12 pagine che hanno prodotto il metro, e il §11 di `TECNOLOGIE.md` è già
@@ -795,6 +796,98 @@ d'oro, quindi il metro non può dare un numero. Sapere se il 90% di attribuzione
 Ranger richiede di trascrivere a mano qualche pagina di confronto — poche, non tutte e dieci.
 
 Speso in tutto: **$4.55**.
+
+---
+
+## 8-ter. La storia nuova, tutta, fino all'audio — **fatta**
+
+*Zio Paperone e le copie a ripetizione*, dieci pagine, **163 battute** (Park Ranger ne aveva 131 in
+dodici): `poc/out/paperone.mp3`, **7'18"**. Dal PDF all'audio senza che nessuno abbia trascritto
+niente, e senza aprire una sessione.
+
+### Il conto
+
+**$1.06 per dieci pagine**, e il conto è fatto come il piano prevedeva:
+
+| | |
+|---|---|
+| sette pagine che non ragionano (3 token, cioè niente) | ~$0.10 l'una |
+| p70 e p74, ragionamento medio (884-1267 token) | $0.13 e $0.12 |
+| **p76**, ragionamento alto (3833 token) | **$0.1966** |
+
+La pagina più cara vale il **19% del conto** da sola, ed è l'ultima della storia, dove si affollano
+le vignette finali. È lo stesso schema di p42 su Park Ranger ($0.22 su $0.83): **il costo non si
+distribuisce, si concentra su poche pagine difficili.** Chi volesse tagliarlo deve guardare lì, non
+alla media.
+
+Totale del progetto: **$5.61**.
+
+**Un costo nascosto, imparato qui:** la scheda del cast entra nel testo delle regole, e il testo
+delle regole è parte della chiave di cache. Toccare `voices-paperone.json` — anche solo per
+aggiungere i nomi propri — **invalida le pagine già estratte**, che si ripagano. Rivedere il cast a
+metà lavoro si paga in riestrazioni.
+
+### Il pezzo che mancava: chi ha una voce non è quale voce
+
+`ricognizione_cast.py` decide **chi** merita una voce (§8-bis) e lo fa bene, ma lasciava a tutti e
+sedici i personaggi gli stessi identici parametri: `pitch` 1.0, `speed` 1.0 per tutti. Sintetizzata
+così, la storia sarebbe uscita **con una voce sola e piatta per quindici personaggi** — cioè senza
+la regia, che è la scelta di fondo del PoC.
+
+La regia ora c'è, scritta a mano leggendo le descrizioni: sette altezze spaziate di **circa un
+semitono** dentro lo stesso arco del PoC (0,85-1,26), col cuoco omone in basso, Paperone basso ma
+con molta energia, Archimede acuto e svelto, Miss Paperett acuta ma calma, la commessa acuta e
+tagliente. Le nove comparse restano sui parametri del narratore, come deciso al §8-bis.
+
+A quella densità **l'altezza da sola non separa i personaggi**: la variabilità del modello fra una
+presa e l'altra è dello stesso ordine (è scritto nel `cast_nota` del PoC). A separarli sono
+velocità, enfasi e contesto. Non è tarata all'ascolto: è una prima passata.
+
+### Due difetti veri, trovati solo arrivando in fondo
+
+1. **Il balloon senza lettere manda in crash la sintesi.** A p73 c'è un balloon con dentro solo
+   `!` — e il disegnatore ce l'ha messo apposta, è la faccia di chi resta senza parole.
+   `pronuncia.py` lo segnalava già, ma come avviso; Chatterbox su un testo senza fonemi non tace,
+   va in errore dentro l'analizzatore di allineamento (`max()` su un tensore vuoto) e si porta giù
+   tutta la corsa, a tre pagine dalla fine. Ora la regola sta in una funzione sola,
+   `pronuncia.muta()`, e la usano tutti e tre: l'avviso in revisione, la sintesi che salta la
+   battuta, il montaggio che non ne cerca la clip. **Il balloon resta nel copione**: semplicemente
+   non si legge.
+2. **`3D` reso "tre di" inciampa.** *"Le galline tre di di Archimede"*: la sigla seguita da un
+   complemento raddoppia la sillaba. Ora è *tridì*, che è anche come si dice davvero. Il tipo di
+   difetto che si vede solo leggendo il copione vero di una storia vera, mai a tavolino.
+
+**Uno lasciato lì, ed è onesto dirlo:** a p70 il modello ha riportato `DEL-LE`, cioè la sillabazione
+che sulla pagina va a capo. Non c'è una regola sicura che la chiuda — `auto-montante`, `super-pro` e
+`Stra-uao!` del PoC hanno un trattino vero, e sono indistinguibili da questo. È roba da revisione
+umana, una occorrenza su 163.
+
+### Come è venuta la sintesi
+
+162 clip (163 battute meno quella muta), **12 riprese** per difetto e **2 clip che il difetto non**
+**l'hanno perso**: due battute di Paperone in clipping, tutte e due urlate, dopo cinque prese. Con
+`exaggeration` 0.9 il modello spinge, e su un personaggio che sbraita sempre forse è troppo: è il
+primo numero da ritoccare quando si tara la regia a orecchio.
+
+### Quello che questo giro **non** dice
+
+Per questa storia non esiste un copione d'oro, quindi **l'attribuzione non ha un numero**: il 90% è
+misurato su Park Ranger e qui è solo una speranza. Il giudizio resta l'ascolto. Quello che si può
+dire è che la catena regge su materiale mai visto, dieci pagine di fila, per un'ora scarsa di
+lavoro e un dollaro.
+
+### Due storie nello stesso repo
+
+`synthesize_chatterbox.py` e `assemble.py` avevano le strade inchiodate a `poc/script/` e
+`poc/voices.json`: per sintetizzare la seconda storia bisognava scambiare i file a mano e
+rimetterli a posto dopo, che è esattamente il modo in cui si perde il lavoro di prima. Ora
+prendono `--copione`, `--voci`, `--clips`, e `assemble.py` anche `--nome` per il file montato:
+
+    poc/.venv-chatterbox/bin/python poc/synthesize_chatterbox.py --all \
+      --copione poc/estrazione/paperone --voci poc/voices-paperone.json --clips poc/clips/paperone
+    poc/.venv/bin/python poc/assemble.py --story \
+      --copione poc/estrazione/paperone --voci poc/voices-paperone.json \
+      --clips poc/clips/paperone --nome paperone
 
 ---
 
