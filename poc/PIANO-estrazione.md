@@ -8,8 +8,8 @@ Stato: **fasi 1, 2, 4, 5, 6 fatte e la 8 cominciata.** Testo, battute, ordine e 
 chiusi; l'attribuzione sta al 90% su Park Ranger. Il giro completo - PDF, cast, copione, pronuncia,
 revisione - gira su una seconda storia mai trascritta (§8-bis), ma senza copione d'oro non se ne
 puo' misurare la bonta'. Tutt'e due le storie arrivano fino all'audio senza sessione
-(poc/out/storia-automatica.mp3 e poc/out/paperone.mp3, §6-ter e §8-ter): il giudizio che manca
-e' l'ascolto. Speso finora in chiamate al modello: $5.61, di cui $1.06 per la storia nuova e
+(poc/out/storia-automatica.mp3 e poc/out/paperone.mp3, §6-ter e §8-ter) e tutt'e due sono state
+**ascoltate e approvate** il 2026-09-18. Speso finora in chiamate al modello: $5.61, di cui $1.06 per la storia nuova e
 $0.00 per la fase 6. Aggiornato il 2026-09-18.
 
 ---
@@ -655,13 +655,15 @@ dal metro (90,1%), e si sentono come uno scambio di personaggio, non come una pr
 altre due sono i due balloon invertiti di p52, che si scambiano *"Caffè?"* e *"Hmmpf!"*. Di
 pronuncia vera e propria cambia **una battuta sola su 131**, la maiuscola dopo i puntini a p41.
 
-### Quello che ancora non si sa
+### Il verdetto: ascoltata, e va bene
 
-**Il verdetto è un ascolto, e non l'ho fatto io.** La misura dice che il convertitore riproduce le
-decisioni prese a mano nel PoC; non dice che quelle decisioni suonino bene, e soprattutto non dice
-niente sulle parole del dizionario **aggiunte a tavolino e mai sintetizzate** (*scèf*, *gràul*,
-*tutòrial*, le sigle, i quaranta imperativi accentati): quelle si sapranno solo quando capiterà una
-storia che le usa.
+**Mauro l'ha ascoltata il 2026-09-18 e l'ha approvata** («entrambe le storie mi sembrano buone»).
+È l'unica misura che i numeri non sapevano dare: 130 su 131 diceva che il convertitore riproduce le
+decisioni prese a mano nel PoC, non che quelle decisioni suonino bene. Ora lo sappiamo.
+
+Resta fuori dal verdetto quello che l'ascolto non ha potuto toccare: le parole del dizionario
+**aggiunte a tavolino e mai capitate in una storia** (*scèf*, *gràul*, *tutòrial*, gran parte dei
+quaranta imperativi accentati). Quelle si sapranno quando serviranno.
 
 ---
 
@@ -869,12 +871,16 @@ umana, una occorrenza su 163.
 `exaggeration` 0.9 il modello spinge, e su un personaggio che sbraita sempre forse è troppo: è il
 primo numero da ritoccare quando si tara la regia a orecchio.
 
-### Quello che questo giro **non** dice
+### Il verdetto, e quello che il verdetto non copre
 
-Per questa storia non esiste un copione d'oro, quindi **l'attribuzione non ha un numero**: il 90% è
-misurato su Park Ranger e qui è solo una speranza. Il giudizio resta l'ascolto. Quello che si può
-dire è che la catena regge su materiale mai visto, dieci pagine di fila, per un'ora scarsa di
-lavoro e un dollaro.
+**Ascoltata e approvata il 2026-09-18**, insieme all'altra. Vuol dire che la catena regge su
+materiale mai visto — dieci pagine di fila, un'ora scarsa e un dollaro — e che **la regia scritta
+alla cieca**, leggendo le descrizioni del cast senza mai sentire una nota, sta in piedi al primo
+colpo.
+
+Per questa storia non esiste però un copione d'oro, quindi **l'attribuzione non ha un numero**: il
+90% è misurato su Park Ranger, qui è una speranza che l'orecchio non ha smentito. Non è la stessa
+cosa, e conviene non confonderle.
 
 ### Due storie nello stesso repo
 
@@ -912,8 +918,16 @@ prendono `--copione`, `--voci`, `--clips`, e `assemble.py` anche `--nome` per il
 - **sforzo `low`/`medium` sulle pagine care**: il costo è concentrato su poche pagine difficili
   (p42 da sola vale $0.22 su $0.83). A `low`, su una pagina, l'attribuzione era peggiore — ma era
   una pagina e un giro, cioè niente.
-- **le ultime 13 attribuzioni**: nessuno le ha ancora corrette davvero. Finché il copione corretto
-  non viene sintetizzato e riascoltato, «minuti invece di ore» resta una previsione, non una misura.
+- **le ultime 13 attribuzioni**: nessuno le ha ancora corrette, e `storia-automatica.mp3` le
+  contiene tutte e tredici — tredici battute dette dalla voce sbagliata su 131. **All'ascolto la
+  storia è stata approvata lo stesso** (2026-09-18). Delle due l'una: o quegli scambi si sentono
+  poco, o si sentono e non danno fastidio. In tutti e due i casi è un indizio che spingere
+  l'attribuzione dal 90% al 98% valga **meno** di quanto il metro lascia credere — e il metro,
+  qui, conta più di quanto conti l'orecchio solo se si vuole un numero da mettere in un
+  documento. Da verificare guardando il copione in revisione con l'audio a fianco, non da
+  decidere adesso.
+  Resta vero che «minuti invece di ore» non è ancora misurato: la revisione a mano di una storia
+  intera non l'ha ancora cronometrata nessuno.
 - ~~da dove viene la scheda del cast per una storia nuova~~ → **fatto**, §8-bis. Resta da misurare
   se il cast proposto regge quanto quello scritto a mano.
 
