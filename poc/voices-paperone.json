@@ -167,6 +167,12 @@
       "descrizione": "Il vicino concorrente che inchioda il cartello 'UOVA PIÙ ECONOMICHE' e grida di comprare le sue uova a un dollaro al chilo, facendo crollare ancora i prezzi. Si riconosce da: Uomo dal muso canino con capelli neri e naso grosso, camicia verde militare, martello in mano accanto al cartello sulla staccionata. Nella storia non viene mai chiamato per nome. COMPARSA: ha poche battute, e le legge il narratore. Va comunque riconosciuto, se no le sue battute finiscono a qualcun altro."
     }
   },
+  "nomi_propri_nota": "Nomi propri che poc/pronuncia.py deve rimettere in maiuscolo dopo aver abbassato il MAIUSCOLO del fumetto, e che i nomi del cast (le chiavi di 'speakers') non coprono: luoghi, personaggi nominati ma che non parlano, e i nomi composti, che vanno cercati interi - 'Parco Nazionale' e' un nome proprio, 'il parco e' pieno di gente' no. Con 'scritto'/'letto' il nome si pronuncia diverso da come e' stampato.",
+  "nomi_propri": [
+    "Paperopoli",
+    "Paperino",
+    "Miss Paperett"
+  ],
   "type_overrides": {
     "sfx": {
       "descrizione": "Onomatopee e grugniti: piu' energici e compressi.",

@@ -197,6 +197,8 @@ select, .testo { font: inherit; padding: 4px 6px; border-radius: 5px;
 .attrezzi button { font: 12px/1 inherit; padding: 4px 6px; border: 1px solid var(--bordo);
   background: transparent; color: var(--tenue); border-radius: 5px; cursor: pointer; }
 .attrezzi button:hover { color: var(--accento); border-color: var(--accento); }
+.pronuncia { grid-column: 4; font-size: 12.5px; color: var(--tenue); padding: 0 6px; }
+.pronuncia:empty { display: none; }
 .note { grid-column: 1 / -1; font-size: 12.5px; color: #8a5a00; }
 .note:empty { display: none; }
 @media (prefers-color-scheme: dark) { :root:not([data-tema="chiaro"]) .note { color: var(--sospetto); } }
@@ -328,7 +330,25 @@ function disegna() {
 
     const testo = el("div", { className: "testo", contentEditable: "plaintext-only",
       textContent: e.text, spellcheck: false });
-    testo.oninput = () => { e.text = testo.textContent; segnaTocco(); aggiornaNote(i); };
+
+    // La pronuncia e' la stessa battuta come la sentira' il sintetizzatore: la calcola
+    // poc/pronuncia.py, qui si legge e basta. Si corregge nel dizionario, non riga per riga,
+    // perche' una parola resa male e' resa male in tutte le storie.
+    const pronuncia = el("div", { className: "pronuncia" });
+    const mostraPronuncia = () => {
+      pronuncia.textContent = (e.text_tts && e.text_tts !== e.text) ? "\\u266a " + e.text_tts : "";
+    };
+    mostraPronuncia();
+
+    testo.oninput = () => {
+      e.text = testo.textContent;
+      // Cambiato il testo, la pronuncia calcolata prima non vale piu' - e siccome la sintesi
+      // legge 'text_tts' quando c'e', lasciarla li' vorrebbe dire far leggere la vecchia
+      // battuta. Si butta, e si rifa' passare pronuncia.py dopo --applica.
+      delete e.text_tts;
+      mostraPronuncia();
+      segnaTocco(); aggiornaNote(i);
+    };
 
     const radio = el("input", { type: "checkbox", checked: !!e.radio });
     radio.onchange = () => { e.radio = radio.checked; segnaTocco(); };
@@ -345,7 +365,7 @@ function disegna() {
 
     const note = el("div", { className: "note", id: "note" + i });
 
-    riga.append(pos, tipo, chi, testo, sotto, note);
+    riga.append(pos, tipo, chi, testo, pronuncia, sotto, note);
     lista.append(riga);
     aggiornaNote(i, riga);
   });

@@ -4,10 +4,11 @@ Il PoC ha lasciato aperto il problema più grosso (`TECNOLOGIE.md` §11): i 131 
 letti e trascritti a mano, uno per uno, in sessione. **Undici minuti di GPU per la sintesi, ore per
 la trascrizione.** Questo documento è il piano per chiudere quel buco.
 
-Stato: **fasi 1, 2, 4, 5 fatte e la 8 cominciata.** Testo, battute e ordine sono chiusi;
-l'attribuzione sta al 90% su Park Ranger. Il giro completo - PDF, cast, copione, revisione - gira
-su una seconda storia mai trascritta (§8-bis), ma senza copione d'oro non se ne puo' misurare la
-bonta'. Speso finora in chiamate al modello: $4.55. Aggiornato il 2026-09-18.
+Stato: **fasi 1, 2, 4, 5, 6 fatte e la 8 cominciata.** Testo, battute, ordine e pronuncia sono
+chiusi; l'attribuzione sta al 90% su Park Ranger. Il giro completo - PDF, cast, copione, pronuncia,
+revisione - gira su una seconda storia mai trascritta (§8-bis), ma senza copione d'oro non se ne
+puo' misurare la bonta', e niente di tutto questo e' ancora stato ascoltato. Speso finora in
+chiamate al modello: $4.55, di cui $0.00 per la fase 6. Aggiornato il 2026-09-18.
 
 ---
 
@@ -549,9 +550,100 @@ vedere. Sono scambi fra due personaggi nella stessa vignetta, e li vede solo un 
 
 `synthesize_chatterbox.py` legge `entry.get("text_tts") or entry["text"]`: senza `text_tts` ricade sul
 testo stampato senza errori. La fase 6 migliora la pronuncia (`CAFFE'` letto alla lettera), **non è un
-blocco**. La storia si può già rifare dal PDF senza sessione.
+blocco** — ed è stata fatta subito dopo, §6-ter. La storia si può già rifare dal PDF senza sessione.
 
 Speso in tutto fino a qui: **$3.11**.
+
+---
+
+## 6-ter. La pronuncia, senza modello — **fatta**
+
+Era la fase 6, ed è l'unico pezzo di questo lavoro che **non richiede di guardare la pagina**: il
+testo da leggere è una funzione del testo stampato. Il modello non c'entra, e infatti non è stato
+chiamato nemmeno una volta — costo dell'intera fase: **$0.00**.
+
+`poc/pronuncia.py` più `poc/pronuncia.json` (il dizionario, uguale per tutte le storie) più
+`nomi_propri` dentro il `voices.json` della storia (l'unica parte che cambia).
+
+### Il metro c'era già, e nessuno se n'era accorto
+
+Il PoC ha lasciato **131 coppie** `text` → `text_tts` scritte a mano, una per battuta. Sono la sola
+definizione di "pronuncia giusta" che questo progetto possiede, e `pronuncia.py --verifica` ci
+rigira sopra il convertitore:
+
+| | |
+|---|---|
+| battute con pronuncia scritta a mano | 131 |
+| identiche a quella scritta a mano | **130 — 99,2%** |
+| diverse | 1 |
+
+L'unica diversa è una **disparità di chi ha scritto l'oro**, non un errore: dopo i puntini di
+sospensione a metà battuta il PoC ha ricominciato in minuscolo 18 volte su 20, e in quella lì ha
+messo la maiuscola. Il convertitore segue la regola che vale 19 volte su 20.
+
+E sulla catena intera — copione **estratto in automatico** più pronuncia, contro il copione del
+PoC — le identiche sono **128 su 131**. Le due che mancano all'appello non sono di pronuncia: sono
+due balloon che l'estrattore ha messo in ordine inverso a p52, e il metro dell'ordine li conta già.
+
+### Dove finisce la regola e comincia il dizionario
+
+Il criterio è uno: **una regola si scrive solo se sbagliare le costa meno che tacere.**
+
+- **L'apostrofo che è un accento.** `CAFFE'` → *caffè*, `PIU'` → *più*. Regola, con due elenchi
+  chiusi accanto: i troncamenti dove l'apostrofo resta (`PO'`, `BE'`, e gli imperativi `FA'`,
+  `STA'`, `VA'`, `DI'`, che l'indicativo non apostrofa mai), e la E acuta della grammatica
+  (*perché*, *ventitré*). `DA'` è l'unico davvero ambiguo e si legge *dà*: scommessa dichiarata.
+- **Gli imperativi col pronome attaccato.** `DATEMI` → *dàtemi*, `DATEMELO` → *dàtemelo*. Regola,
+  ma **solo** quelli di seconda plurale, dove il `-te-` fa da àncora: la stessa regola sulla
+  seconda singolare accenterebbe *salami* e *richiami*. Quelli (*perdònami*, *spòstati*) stanno
+  nel dizionario, uno per uno.
+- **I numeri.** `13.123` → *tredicimilacentoventitré*, con l'accento al `tré` finale. Regola. Una
+  cifra attaccata a una lettera invece è una sigla e la prende il dizionario: senza quel confine,
+  `3D` diventava *treD*.
+- **L'accento delle parole italiane.** Dizionario, e basta. Il TTS l'accento piano lo azzecca da
+  solo quasi sempre: è l'eccezione (*ossìgeno*, *bùssola*, *sollètico*) che va scritta. Provare a
+  indovinarlo farebbe più danno di quanto ne ripara.
+- **Le onomatopee e i forestierismi.** Dizionario. `GROWL` → *gràul*, `CHEF` → *scèf*: non c'è
+  regola che ci arrivi, e una che non è nel dizionario esce com'è stampata e si sente al primo
+  ascolto. È lì che si aggiunge la riga, una volta per tutte le storie.
+
+### I nomi propri si mettono da parte, non si correggono dopo
+
+Prima versione: abbassa tutto il MAIUSCOLO, poi rimetti la maiuscola ai nomi. Non regge — *"nel
+Parco Nazionale di Brownstone"* vuole la maiuscola, *"il parco è pieno di gente"* no, e sono la
+stessa parola. Ora il nome viene **tolto dalla frase prima di ogni trasformazione** e rimesso alla
+fine: si cerca com'è **stampato**, i più lunghi per primi, e nel frattempo il suo posto lo tiene un
+segnaposto che nessuna regola tocca. Così un nome può anche avere una pronuncia sua
+(`DUCKTUBE` → *Dactiùb*) senza che il dizionario generale debba saperne niente.
+
+L'elenco viene dal `voices.json` della storia: le chiavi di `speakers` sono già i personaggi che
+parlano, `nomi_propri` aggiunge i luoghi e chi è nominato e basta. Per Park Ranger sono otto righe.
+
+### Due trappole trovate provando
+
+1. **Il `text_tts` che invecchia.** `synthesize_chatterbox.py` legge `text_tts` *quando c'è*, e ci
+   ricade sopra soltanto se manca. Se uno corregge una battuta nella pagina di revisione, la
+   pronuncia calcolata prima resta lì e **vince sulla correzione**: si sintetizzerebbe la vecchia
+   battuta. Ora `rivedi.py` butta via il `text_tts` di ogni battuta che viene toccata, e la
+   pronuncia si rifà passare dopo `--applica`. È idempotente, rifarla non costa niente.
+2. **L'estrattore ogni tanto normalizza da solo.** A p52 la pagina stampa `UACK!` e il copione
+   estratto dice `Uack!`. La regola "le parole non maiuscole sono già a posto" — che serve per i
+   crediti, dove i nomi dei disegnatori arrivano già in minuscolo — se la lasciava scappare. Ora
+   la parola passa comunque dal dizionario: non si abbassa, ma se è un'onomatopea si rende.
+
+### La pagina di revisione mostra come suonerà
+
+Sotto ogni battuta, in piccolo, `rivedi.py` scrive ora la pronuncia quando è diversa dal testo. Si
+legge e basta: una parola resa male è resa male in tutte le storie, e si corregge nel dizionario,
+non riga per riga.
+
+### Quello che ancora non si sa
+
+**Nessuno l'ha ancora ascoltata.** 130 su 131 è una misura sul testo: dice che il convertitore
+riproduce le decisioni prese a mano nel PoC, non che quelle decisioni suonino bene, e nemmeno che
+le parole nuove del dizionario (aggiunte a tavolino, mai sintetizzate) suonino come dicono. La
+prova vera è rifare la sintesi e riascoltare — e vale anche come prima verifica che il copione
+estratto in automatico regga fino all'audio.
 
 ---
 
@@ -613,7 +705,7 @@ parla, invece di costruirci sopra.
 | ~~3~~ | ~~passo A + passo B su ritagli~~ | **annullata** — il testo e' a WER 0,1% su 12 pagine, il passo B non ha piu' un problema da risolvere (§5-ter) |
 | ~~4~~ | ~~scheda del cast su tutte e 12, con ripetizioni~~ | **fatto** — §5-ter. Resta da provare lo sforzo `low`/`medium` sulle pagine care |
 | ~~5~~ | ~~`rivedi.py`~~ | **fatto** — §6-bis. Da misurare sul campo se una pagina si rivede in meno di 5 minuti |
-| 6 | dizionario di pronuncia deterministico per `text_tts` — **il prossimo** | la pronuncia torna quella del PoC (senza, la sintesi ricade sul testo stampato e legge "CAFFE'" alla lettera) |
+| ~~6~~ | ~~dizionario di pronuncia deterministico per `text_tts`~~ | **fatto** — §6-ter. 130 delle 131 pronunce del PoC tornano identiche, senza chiamare il modello. Resta da ascoltarle |
 | 7 | segmentazione automatica delle voltate nel filmato | `stack_video.py` senza `--da`/`--a` a mano |
 | 8 | prova su una storia mai vista — **cominciata** | il giro gira su *Le copie a ripetizione* (§8-bis). Per un numero servono poche pagine d'oro trascritte a mano su quella storia |
 
@@ -674,7 +766,8 @@ Due difetti trovati provando, tutti e due strutturali:
 ### Il giro completo, su materiale mai visto
 
     PDF → render_pagine.py → ricognizione_cast.py → voices-paperone.json
-        → estrai_copione.py --voices → rivedi.py
+        → estrai_copione.py --voices → pronuncia.py → rivedi.py
+        → rivedi.py --applica → pronuncia.py
 
 Provato su p67: titolo, crediti al posto giusto (la convenzione regge su una storia diversa), testo
 corretto, e il venditore di posate attribuito a sé stesso. **Il giro si chiude su una storia che

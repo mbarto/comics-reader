@@ -96,6 +96,23 @@
       "cfg_weight": 0.45
     }
   },
+  "nomi_propri_nota": "Nomi propri che poc/pronuncia.py deve rimettere in maiuscolo dopo aver abbassato il MAIUSCOLO del fumetto, e che i nomi del cast (le chiavi di 'speakers') non coprono: luoghi, personaggi nominati ma che non parlano, e i nomi composti, che vanno cercati interi - 'Parco Nazionale' e' un nome proprio, 'il parco e' pieno di gente' no. Con 'scritto'/'letto' il nome si pronuncia diverso da come e' stampato.",
+  "nomi_propri": [
+    "Paolino",
+    "Arch",
+    "Picco Fiocco",
+    "Colle Becco",
+    "Brownstone",
+    "Parco Nazionale",
+    {
+      "scritto": "Park Ranger",
+      "letto": "Park Rènger"
+    },
+    {
+      "scritto": "Ducktube",
+      "letto": "Dactiùb"
+    }
+  ],
   "type_overrides": {
     "sfx": {
       "descrizione": "Onomatopee e grugniti: piu' energici e compressi.",

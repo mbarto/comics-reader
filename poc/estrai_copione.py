@@ -15,9 +15,9 @@ Poi:
 Serve una credenziale: ANTHROPIC_API_KEY nell'ambiente.
 
 Cosa NON fa, di proposito:
- - non produce 'text_tts'. E' una trasformazione deterministica a valle (dizionario di pronuncia,
-   fase 6), non un compito del modello, e chiederla qui sporcherebbe la misura del ragionamento.
-   Con --con-tts la si chiede lo stesso, per vedere quanto costa.
+ - non produce 'text_tts'. E' una trasformazione deterministica a valle - la fa poc/pronuncia.py,
+   senza modello - non un compito di chi guarda la pagina, e chiederla qui sporcherebbe la misura
+   del ragionamento. Con --con-tts la si chiede lo stesso, per vedere quanto costa.
  - non produce i riquadri dei balloon. Con --riquadri li chiede: e' la precondizione della fase 3
    (ritagliare per leggere il testo a risoluzione nativa) e una passata sola basta a sapere se le
    coordinate sono abbastanza buone per ritagliarci sopra.
