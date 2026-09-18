@@ -7,7 +7,8 @@ la trascrizione.** Questo documento è il piano per chiudere quel buco.
 Stato: **fasi 1, 2, 4, 5, 6 fatte e la 8 cominciata.** Testo, battute, ordine e pronuncia sono
 chiusi; l'attribuzione sta al 90% su Park Ranger. Il giro completo - PDF, cast, copione, pronuncia,
 revisione - gira su una seconda storia mai trascritta (§8-bis), ma senza copione d'oro non se ne
-puo' misurare la bonta', e niente di tutto questo e' ancora stato ascoltato. Speso finora in
+puo' misurare la bonta'. La storia estratta in automatico arriva fino all'audio
+(poc/out/storia-automatica.mp3, §6-ter), e quello e' l'ascolto che manca. Speso finora in
 chiamate al modello: $4.55, di cui $0.00 per la fase 6. Aggiornato il 2026-09-18.
 
 ---
@@ -637,13 +638,29 @@ Sotto ogni battuta, in piccolo, `rivedi.py` scrive ora la pronuncia quando è di
 legge e basta: una parola resa male è resa male in tutte le storie, e si corregge nel dizionario,
 non riga per riga.
 
+### La sintesi, rifatta dal copione automatico
+
+`poc/out/storia-automatica.mp3`, 6'34". Non è la storia del PoC risintetizzata: è il **copione
+estratto in automatico**, con la pronuncia calcolata, che arriva fino all'audio senza che nessuno
+abbia trascritto niente. Accanto resta `storia.mp3`, quella del PoC, per l'ascolto a confronto.
+
+La sintesi si è cavata con **15 clip su 131**. Le altre 116 avevano impronta identica — stesso
+testo da leggere, stesso personaggio — e la cache le ha riusate senza toccare la GPU. È il 99,2%
+misurato al §6-ter che ricompare da un'altra porta: se il convertitore avesse cambiato una parola,
+quella clip si sarebbe rifatta.
+
+Delle 15, **13 cambiano solo la voce**: sono le attribuzioni sbagliate dell'estrattore, già contate
+dal metro (90,1%), e si sentono come uno scambio di personaggio, non come una pronuncia storta. Le
+altre due sono i due balloon invertiti di p52, che si scambiano *"Caffè?"* e *"Hmmpf!"*. Di
+pronuncia vera e propria cambia **una battuta sola su 131**, la maiuscola dopo i puntini a p41.
+
 ### Quello che ancora non si sa
 
-**Nessuno l'ha ancora ascoltata.** 130 su 131 è una misura sul testo: dice che il convertitore
-riproduce le decisioni prese a mano nel PoC, non che quelle decisioni suonino bene, e nemmeno che
-le parole nuove del dizionario (aggiunte a tavolino, mai sintetizzate) suonino come dicono. La
-prova vera è rifare la sintesi e riascoltare — e vale anche come prima verifica che il copione
-estratto in automatico regga fino all'audio.
+**Il verdetto è un ascolto, e non l'ho fatto io.** La misura dice che il convertitore riproduce le
+decisioni prese a mano nel PoC; non dice che quelle decisioni suonino bene, e soprattutto non dice
+niente sulle parole del dizionario **aggiunte a tavolino e mai sintetizzate** (*scèf*, *gràul*,
+*tutòrial*, le sigle, i quaranta imperativi accentati): quelle si sapranno solo quando capiterà una
+storia che le usa.
 
 ---
 
